@@ -27,6 +27,12 @@
  - After that can change dev_mode to false in config.yaml
 
 ### Usage
+ - 
+ - Sample file located at src/Resources/kuivuri.xml so easiest way to execute and test 
+   ```
+   bin/app importer:run --source=src/Resources/kuivuri.xml --format=xml
+   ```
+   
  - To see command help
    ```
    bin/app help importer:run 
@@ -36,11 +42,6 @@
    ```
    vendor/bin/phpunit
    ```
- 
-  - Execute
-    ```
-    bin/app importer:run --source=src/Resources/kuivuri.xml --format=xml
-    ```
   
   - Dry run to see results
     ```
@@ -59,7 +60,7 @@
   - Made ext_program_id nullable for now because can not find appropriative value in provided xml 
 
 ### Todo
-Just a list of features I think would be good to implement
+Just a list of things would be good to implement
 - Make installation script interactive 
 - Add Logging
 - Additional cache over doctrine's
