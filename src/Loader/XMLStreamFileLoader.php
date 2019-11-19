@@ -29,13 +29,11 @@ class XMLStreamFileLoader extends \XMLReader implements StreamLoaderInterface
      */
     public function init(string $source) : self
     {
-        $this->source = $source;
-
-        $content = ltrim($this->source);
+        $this->source = ltrim($source);
 
         if ($this->isXmlDocument($this->source))
         {
-            $this->XML($content, null, LIBXML_NOBLANKS | LIBXML_DTDLOAD);
+            $this->XML($this->source, null, LIBXML_NOBLANKS | LIBXML_DTDLOAD);
         }
         else
         {
