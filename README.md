@@ -52,7 +52,7 @@
     bin/app importer:run --source=src/Resources/anyfile --format=json --dry-run
     ```
  
-### Difference from riginal DB structure
+### Difference from original DB structure
   - Moved show_type to 'service_livetv_show_type' table and made not optional, because of avoiding usage of ENUM type and db normalisation
   - Set service_livetv_channel DEFAULT CHARSET to utf8;
   - Removed TIMESTAMP fields (using datetime and doctrine timestampable extension])
