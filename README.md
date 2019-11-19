@@ -27,7 +27,6 @@
  - After that can change dev_mode to false in config.yaml
 
 ### Usage
- - 
  - Sample file located at src/Resources/kuivuri.xml so easiest way to execute and test 
    ```
    bin/app importer:run --source=src/Resources/kuivuri.xml --format=xml
