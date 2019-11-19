@@ -1,0 +1,87 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    EPGImporter\DoctrineEntityManagerFactory:
+        class: EPGImporter\DoctrineEntityManagerFactory
+        arguments: ['@parameter_bag']
+
+    EPGImporter\Command\ParseCommand:
+        class:     EPGImporter\Command\ParseCommand
+        tags: [ 'epg.command' ]
+
+    EPGImporter\Factory\ParserFactory:
+        class:     EPGImporter\Factory\ParserFactory
+
+    EPGImporter\Loader\XMLFileLoader:
+        class:     EPGImporter\Loader\XMLStreamFileLoader
+
+    EPGImporter\DataManager\DoctrineDataManager:
+        class:      EPGImporter\DataManager\DoctrineDataManager
+        arguments:  ['@doctrine.em']
+
+    EPGImporter\DataManager\DryRunDataManager:
+        class:      EPGImporter\DataManager\DryRunDataManager
+        arguments:  ['@doctrine.em']
+
+    EPGImporter\ParserManager:
+        class:     EPGImporter\ParserManager
+        arguments: ['@EPGImporter\Parser\XMLParser', 'EPGImporter\DataManager\DoctrineDataManagerInterface' ]
+
+    EPGImporter\Generator\FromXMLEntityGenerator:
+        class:     EPGImporter\Generator\FromXMLEntityGenerator
+        arguments: ['%xsd_schema%']
+
+    EPGImporter\Parser\XMLParser:
+        class:     EPGImporter\Parser\XMLParser
+        factory: '@EPGImporter\Factory\ParserFactory'
+        arguments: [ 'EPGImporter\Parser\XMLParser', 'EPGImporter\Loader\XMLStreamFileLoader' ]
+
+    EPGImporter\Parser\JSONParser:
+        class:     EPGImporter\Parser\JSONParser
+        factory: '@EPGImporter\Factory\ParserFactory'
+        arguments: [ 'EPGImporter\Parser\JSONParser', 'EPGImporter\Loader\XMLStreamFileLoader' ]
+
+    parameter_bag:
+        class: Symfony\Component\DependencyInjection\ParameterBag\ContainerBag
+        arguments: ['@service_container']
+
+    doctrine.em:
+        class: Doctrine\ORM\EntityManager;
+        factory: [ '@EPGImporter\DoctrineEntityManagerFactory', 'createEntityManager' ]
+        arguments: ['@parameter_bag']
+
+    Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand:
+        class: Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand:
+        class: Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand:
+        class: Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand:
+        class: Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand:
+        class: Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand:
+        class: Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand:
+        class: Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand
+        tags: [ 'doctrine.command' ]
+
+    Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand:
+        class: Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand
+        tags: [ 'doctrine.command' ]
+

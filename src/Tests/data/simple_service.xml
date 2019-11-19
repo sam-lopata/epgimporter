@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<epg actual_transport_stream_id="100" actual_original_network_id="42249">
+    <network name="unknown_network_1">
+        <service id="17" transport_stream_id="1" original_network_id="42249">
+            <event id="5018" start_time="16/06/02 01:00:00" duration="02:25:00" free_CA="0" running_status="0">
+                <language code="fin">
+                    <short_event language="fin" name_encoding="ISO8859-9" name="Uutisikkuna" text_encoding="default" text=""/>
+                </language>
+                <parental_rating>
+                    <country country="FIN" rating="0"/>
+                </parental_rating>
+            </event>
+        </service>
+    </network>
+</epg>

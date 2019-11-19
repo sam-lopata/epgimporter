@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__ . '/../bootstrap.php';
+
+use Doctrine\DBAL\Tools\Console\ConsoleRunner;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Console\Helper\HelperSet;
+
+// Add commands defined as services
+$commandsServicesIds = $containerBuilder->findTaggedServiceIds('epg.command');
+foreach (array_keys($commandsServicesIds) as $commandServiceId) {
+    $command = $containerBuilder->get($commandServiceId);
+    $command->setContainer($containerBuilder);
+    $application->add($command);
+}
+
+$dev_mode = $containerBuilder->getParameter('dev_mode');
+if ($dev_mode) {
+    // add doctrine helperSet
+    try {
+        $em = $containerBuilder->get('doctrine.em');
+    } catch (InvalidConfigurationException $e) {
+        trigger_error($e->getMessage());
+    }
+
+    $helperSet = new HelperSet(
+        [
+            'db' => new ConnectionHelper($em->getConnection()),
+            'em' => new EntityManagerHelper($em)
+        ]
+    );
+    $application->setHelperSet($helperSet);
+
+    // register doctrine cli commands
+    $services = $containerBuilder->findTaggedServiceIds('doctrine.command');
+    foreach (array_keys($services) as $serviceId) {
+        $application->add($containerBuilder->get($serviceId));
+    }
+    ConsoleRunner::addCommands($application);
+}
+
+$application->run();
+
+
+

@@ -1,0 +1,17 @@
+parameters:
+    dev_mode: true
+    xsd_schema: 'src/Resources/event_schema.xsd'
+    doctrine:
+        metadata_dirs: ['src/Entity']
+        use_cache: true
+        cache: Doctrine\Common\Cache\ArrayCache
+        cache_dir: 'var/cache'
+        connection:
+            driver: pdo_mysql
+            host: 127.0.0.1
+            port: 3306
+            dbname: egpimporter
+            charset: UTF8
+            user: egpimporter
+            password: egpimporter
+
