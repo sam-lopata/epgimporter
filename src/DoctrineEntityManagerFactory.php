@@ -6,8 +6,6 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
@@ -43,7 +41,7 @@ class DoctrineEntityManagerFactory
      *
      * @return EntityManager
      */
-    public function createEntityManager()
+    public function createEntityManager() : EntityManager
     {
         $connection = $this->params['connection'] ?? null;
         if (null === $connection) {
