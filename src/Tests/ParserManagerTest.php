@@ -5,7 +5,7 @@ namespace EPGImporter\Tests;
 use EPGImporter\DataManager\DataManagerInterface;
 use EPGImporter\Generator\FromXMLEntityGenerator;
 use EPGImporter\Parser\XMLParser;
-use EPGImporter\ParserManager;
+use EPGImporter\ParserManager\ParserManager;
 use PHPUnit\Framework\TestCase;
 
 class ParserManagerTest extends TestCase

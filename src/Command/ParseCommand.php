@@ -9,7 +9,7 @@ use EPGImporter\Generator\EntityGeneratorInterface;
 use EPGImporter\Generator\FromXMLEntityGenerator;
 use EPGImporter\Parser\JSONParser;
 use EPGImporter\Parser\XMLParser;
-use EPGImporter\ParserManager;
+use EPGImporter\ParserManager\ParserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

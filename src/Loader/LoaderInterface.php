@@ -12,7 +12,7 @@ interface LoaderInterface
     /**
      * Load source data
      *
-     * @param string $source Source to load
+     * @param string $source Name of the file with XML located
      *
      * @return LoaderInterface
      */

@@ -16,64 +16,79 @@ class XMLParserTest extends TestCase
     private const SIMPLE_SOURCE = "src/Tests/data/simple_service.xml";
     private const XSD_SCHEMA = 'src/Tests/data/event_schema.xsd';
 
-    public function testXMLParserCreate()
+    public function setUp()
     {
-        $loader = new XMLStreamFileLoader();
-        $parser = new XMLParser($loader);
+        $this->loader = new XMLStreamFileLoader();
+        $this->parser = new XMLParser($this->loader);
+    }
 
-        $reflector = new \ReflectionClass($parser);
+    public function testLoaderSet()
+    {
+        $reflector = new \ReflectionClass($this->parser);
         $loaderProperty = $reflector->getProperty('loader');
         $loaderProperty->setAccessible(true);
-        $this->assertInstanceOf(XMLStreamFileLoader::class, $loaderProperty->getValue($parser));
+        $this->assertInstanceOf(XMLStreamFileLoader::class, $loaderProperty->getValue($this->parser));
+    }
 
+    public function testEtityGeneratorSet()
+    {
         $eg = new FromXMLEntityGenerator(self::XSD_SCHEMA);
-        $parser->setEntityGenerator($eg);
-        $reflector = new \ReflectionClass($parser);
+        $this->parser->setEntityGenerator($eg);
+        $reflector = new \ReflectionClass($this->parser);
         $entityGenerator = $reflector->getProperty('entityGenerator');
         $entityGenerator->setAccessible(true);
-        $this->assertInstanceOf(FromXMLEntityGenerator::class, $entityGenerator->getValue($parser));
+        $this->assertInstanceOf(FromXMLEntityGenerator::class, $entityGenerator->getValue($this->parser));
+    }
 
-        $parser->setSource(self::SOURCE);
-        $reflector = new \ReflectionClass($parser);
+    public function testSourceSet()
+    {
+        $this->parser->setSource(self::SOURCE);
+        $reflector = new \ReflectionClass($this->parser);
         $source = $reflector->getProperty('source');
         $source->setAccessible(true);
-        $this->assertEquals(self::SOURCE, $source->getValue($parser));
+        $this->assertEquals(self::SOURCE, $source->getValue($this->parser));
+    }
 
+    public function testPersistCallbackSet()
+    {
         $chkStr = "setPersistCallback mock";
-        $parser->setPersistCallback(function() use ($chkStr) {
+        $this->parser->setPersistCallback(function() use ($chkStr) {
             return $chkStr;
         });
-        $reflector = new \ReflectionClass($parser);
+        $reflector = new \ReflectionClass($this->parser);
         $persistCallback = $reflector->getProperty('persistCallback');
         $persistCallback->setAccessible(true);
-        $this->assertEquals($chkStr, $persistCallback->getValue($parser)());
+        $this->assertEquals($chkStr, $persistCallback->getValue($this->parser)());
+    }
 
+    public function testChannelCallbackSet()
+    {
         $chkStr = "setChannelCallback mock";
-        $parser->setChannelCallback(function() use ($chkStr) {
+        $this->parser->setChannelCallback(function() use ($chkStr) {
             return $chkStr;
         });
-        $reflector = new \ReflectionClass($parser);
+        $reflector = new \ReflectionClass($this->parser);
         $channelCallback = $reflector->getProperty('channelCallback');
         $channelCallback->setAccessible(true);
-        $this->assertEquals($chkStr, $channelCallback->getValue($parser)());
+        $this->assertEquals($chkStr, $channelCallback->getValue($this->parser)());
+    }
 
+    public function testShowTypeCallback()
+    {
         $chkStr = "setShowTypeCallback mock";
-        $parser->setShowTypeCallback(function() use ($chkStr) {
+        $this->parser->setShowTypeCallback(function() use ($chkStr) {
             return $chkStr;
         });
-        $reflector = new \ReflectionClass($parser);
+        $reflector = new \ReflectionClass($this->parser);
         $showTypeCallback = $reflector->getProperty('showTypeCallback');
         $showTypeCallback->setAccessible(true);
-        $this->assertEquals($chkStr, $showTypeCallback->getValue($parser)());
+        $this->assertEquals($chkStr, $showTypeCallback->getValue($this->parser)());
     }
 
     public function testXMLParserRun()
     {
-        $loader = new XMLStreamFileLoader();
-        $parser = new XMLParser($loader);
-
         $entities = [];
-        $parser->setSource(self::SIMPLE_SOURCE)
+        $this->parser->setSource(self::SIMPLE_SOURCE)
             ->setPersistCallback(function($input) use (&$entities) {
                 $entities[] = $input;
             })

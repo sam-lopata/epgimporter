@@ -1,6 +1,6 @@
 <?php
 
-namespace EPGImporter;
+namespace EPGImporter\ParserManager;
 
 use EPGImporter\DataManager\DataManagerInterface;
 use EPGImporter\Generator\EntityGeneratorInterface;
@@ -11,7 +11,7 @@ use EPGImporter\Parser\ParserInterface;
  *
  * @package EPGImporter
  */
-class ParserManager
+class ParserManager implements ParserManagerInterface
 {
     /** @var ParserInterface */
     private $parser;
@@ -30,12 +30,7 @@ class ParserManager
     private $eg;
 
     /**
-     * ParserManager constructor.
-     *
-     * @param ParserInterface          $parser
-     * @param DataManagerInterface     $dm
-     * @param EntityGeneratorInterface $eg
-     * @param string                   $source
+     * @inheritDoc
      */
     public function __construct(ParserInterface $parser, DataManagerInterface $dm, EntityGeneratorInterface $eg, string $source)
     {

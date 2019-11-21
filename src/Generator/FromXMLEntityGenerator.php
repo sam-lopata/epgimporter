@@ -31,7 +31,7 @@ class FromXMLEntityGenerator implements EntityGeneratorInterface
             throw new \InvalidArgumentException( 'XSD schema file defined in \'xsd_schema\' parameter does not exist');{
         }
 
-        self::$entitySchema = file_get_contents($entitySchema);
+        static::$entitySchema = file_get_contents($entitySchema);
 
         if ("" === self::$entitySchema) {
             throw new \InvalidArgumentException('You should provide valid validation schema');

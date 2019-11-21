@@ -22,7 +22,7 @@ class XMLStreamFileLoader extends \XMLReader implements StreamLoaderInterface
     private $lastStatus;
 
     /**
-     * @param string $source
+     * @param string $source Name of the file with XML located
      *
      * @throws LoaderException
      * @return XMLStreamFileLoader
